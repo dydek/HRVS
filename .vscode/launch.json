@@ -8,7 +8,9 @@
             "name": "PlatformIO Debugger",
             "target": "/Users/michaldydecki/Programming/AVR/Recu_001/.pioenvs/nanoatmega328/firmware.elf",
             "gdbpath": "/Users/michaldydecki/.platformio/penv/bin/piodebuggdb",
-            "autorun": [ "source .pioinit" ]
+            "autorun": [ "source .pioinit" ],
+            "preLaunchTask": "PlatformIO: Pre-Debug",
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
