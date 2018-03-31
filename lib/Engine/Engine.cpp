@@ -5,11 +5,9 @@
 Engine::Engine(uint8_t pin) {
 }
 
-
-void Engine::init() {
-
-}
-
+/**
+ * set speed of the current engine
+ */
 void Engine::set_speed(uint8_t speed) {
     
 }
@@ -19,5 +17,5 @@ void Engine::switch_off() {
 }
 
 void Engine::switch_on() {
-
+    this->set_speed(10);
 }
