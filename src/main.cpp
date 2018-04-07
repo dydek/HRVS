@@ -4,8 +4,9 @@
 
 #include <Arduino.h>
 #include <Bounce2.h>
-#include <LiquidCrystal.h>
-#include <LiquidMenu.h>
+#include <Button.h>
+#include <Thread.h>
+#include <ThreadController.h>
 
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
@@ -13,37 +14,56 @@
 
 #include <TimerOne.h>
 
+#include <Engine.h>
+#include <State.h>
+#include <Controller.h>
+#include <Menu.h>
+
 #include "Config.h"
-#include "Engine.h"
-#include "Controller.h"
 
-struct CurrentValues
-{
-    bool bypass_open = false;
-};
+#define BUTTON_PIN_1 A5
+#define BUTTON_PIN_2 A4
 
-LiquidCrystal lcd(
-    LCD_RS_PIN,
-    LCD_EN_PIN,
-    LCD_D4_PIN,
-    LCD_D5_PIN,
-    LCD_D6_PIN,
-    LCD_D7_PIN);
-
-LiquidLine welcome_line1(1, 0, "Hello Menu");
-
-LiquidLine welcome_line2(1, 1, "Hello test 2");
-
-LiquidScreen welcome_screen(welcome_line1, welcome_line2);
-
-LiquidMenu my_menu(lcd, welcome_screen);
+volatile CurrentValues current_values;
 
 Engine engine1(ENGINE_1_PIN);
-
 Engine engine2(ENGINE_2_PIN);
+
+Menu menu({LCD_RS_PIN,
+           LCD_EN_PIN,
+           LCD_D4_PIN,
+           LCD_D5_PIN,
+           LCD_D6_PIN,
+           LCD_D7_PIN},
+           &current_values);
+
+
+Button button1(BUTTON_PIN_1, true, true, 20);
+Button button2(BUTTON_PIN_2, true, true, 20);
+
+ThreadController controll = ThreadController();
+
+Thread menuUpdateThread = Thread();
 
 // DHT init
 DHT_Unified dht_in(DHTPIN_IN, DHTTYPE);
+
+void niceCallback(){
+	sensors_event_t event;
+    dht_in.temperature().getEvent(&event);
+    if (isnan(event.temperature))
+    {
+        Serial.println("Error reading temperature!");
+    }
+    else
+    {
+        Serial.print("Temperature: ");
+        current_values.in_temp_pre = event.temperature;
+        Serial.print(current_values.in_temp_pre);
+        Serial.println(" *C");
+        menu.refresh();
+    }
+}
 
 uint32_t delayMS;
 
@@ -67,55 +87,65 @@ void update_led()
 void setup()
 {
     Serial.begin(9600);
-    lcd.begin(16, 2);
 
     dht_in.begin();
-
-    my_menu.next_screen();
-    volatile CurrentValues current_values;
-    Engine::init();
 
     delayMS = 2000;
 
     pinMode(9, OUTPUT);
-    pinMode(10, OUTPUT);
-    Timer1.initialize(40);
+    digitalWrite(9, HIGH);
+    // pinMode(10, OUTPUT);
+    // Timer1.initialize(40);
 
-    Timer1.pwm(9, 0);
-    Timer1.pwm(10, 0);
-    Timer1.attachInterrupt(update_led);
+    // Timer1.pwm(9, 0);
+    // Timer1.pwm(10, 0);
+    // Timer1.attachInterrupt(update_led);
+
+    // threads
+    menuUpdateThread.onRun(niceCallback);
+    menuUpdateThread.setInterval(2000);
+
+    controll.add(&menuUpdateThread);
+
+    menu.begin();
 }
+
+unsigned int period_nextScreen = 5000;
+unsigned long lastMs_nextScreen = 0;
 
 void loop()
 {
-    delay(delayMS);
+    button1.read();
+    button2.read();
 
-    float value;
-    value = millis();
-    // Get temperature event and print its value.
-    sensors_event_t event;
-    dht_in.temperature().getEvent(&event);
-    if (isnan(event.temperature))
-    {
-        Serial.println("Error reading temperature!");
+    if (button1.wasPressed()) {
+        menu.next_screen();
+        Serial.println("short click");
     }
-    else
-    {
-        Serial.print("Temperature: ");
-        Serial.print(event.temperature);
-        Serial.println(" *C");
+
+    if (button1.pressedFor(500) && button1.wasReleased()) {
+        menu.next_screen();
+        Serial.println("long click");
     }
-    // Get humidity event and print its value.
-    dht_in.humidity().getEvent(&event);
-    if (isnan(event.relative_humidity))
-    {
-        Serial.println("Error reading humidity!");
+
+    if (button2.wasPressed()) {
+        current_values.fan_speed += 1;
     }
-    else
-    {
-        Serial.print("Humidity: ");
-        Serial.print(event.relative_humidity);
-        Serial.println("%");
-    }
-    Serial.println(millis() - value);
+
+    // float value;
+    // value = millis();
+    // // Get temperature event and print its value.
+    // // Get humidity event and print its value.
+    // dht_in.humidity().getEvent(&event);
+    // if (isnan(event.relative_humidity))
+    // {
+    //     Serial.println("Error reading humidity!");
+    // }
+    // else
+    // {
+    //     Serial.print("Humidity: ");
+    //     Serial.print(event.relative_humidity);
+    //     Serial.println("%");
+    // }
+    controll.run();
 }
