@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 #include <Bounce2.h>
-#include <Button.h>
+#include <JC_Button.h>
 #include <Thread.h>
 #include <ThreadController.h>
 
@@ -38,8 +38,8 @@ Menu menu({LCD_RS_PIN,
            &current_values);
 
 
-Button button1(BUTTON_PIN_1, true, true, 20);
-Button button2(BUTTON_PIN_2, true, true, 20);
+Button button1(BUTTON_PIN_1);
+Button button2(BUTTON_PIN_2);
 
 ThreadController controll = ThreadController();
 
@@ -53,14 +53,14 @@ void niceCallback(){
     dht_in.temperature().getEvent(&event);
     if (isnan(event.temperature))
     {
-        Serial.println("Error reading temperature!");
+        // Serial.println("Error reading temperature!");
     }
     else
     {
-        Serial.print("Temperature: ");
+        // Serial.print("Temperature: ");
         current_values.in_temp_pre = event.temperature;
-        Serial.print(current_values.in_temp_pre);
-        Serial.println(" *C");
+        // Serial.print(current_values.in_temp_pre);
+        // Serial.println(" *C");
         menu.refresh();
     }
 }
@@ -108,6 +108,9 @@ void setup()
     controll.add(&menuUpdateThread);
 
     menu.begin();
+
+    button1.begin();
+    button2.begin();
 }
 
 unsigned int period_nextScreen = 5000;
