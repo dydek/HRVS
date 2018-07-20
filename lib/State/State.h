@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#ifndef _STATE_H
-#define _STATE_H
+#ifndef __STATE_H_
+#define __STATE_H_
 
 struct CurrentValues
 {
@@ -11,6 +11,10 @@ struct CurrentValues
     float in_temp_post = 0;
     float out_temp_pre = 0;
     float out_temp_post = 0;
+    float in_humidity = 0;
+    float out_humidity = 0;
 };
+
+extern volatile struct CurrentValues current_values;
 
 #endif

@@ -30,7 +30,7 @@ void Menu::init_menu()
 {
     this->line1_1 = new LiquidLine(0, 0, "Temparatures:");
     this->line1_2 = new LiquidLine(0, 1, this->current_values->in_temp_pre, " *C");
-    this->line1_3 = new LiquidLine(8, 1, "18 C");
+    this->line1_3 = new LiquidLine(8, 1, "-- C");
     this->welcome_screen = new LiquidScreen(
         *this->line1_1, *this->line1_2, *this->line1_3);
 
@@ -50,10 +50,14 @@ void Menu::init_menu()
     this->line4_2 = new LiquidLine(0, 1, "0");
     this->menu_screen_3 = new LiquidScreen(
         *this->line4_1, *this->line4_2);
+
+    // Set speed menu
+    // this->line_set_speed_1 = new LiquidLine(0, 0, "");
 }
 
 void Menu::next_screen()
 {
+    Serial.println("next screen");
     this->menu->next_screen();
 }
 

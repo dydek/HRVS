@@ -12,7 +12,7 @@ Controller::Controller(Engine *engine_intake, Engine *engine_outtake)
 
 void Controller::start(void)
 {
-    this->set_speed(STEP_1);
+    this->set_speed(Steps::STEP_1);
 }
 
 void Controller::stop(void)
@@ -45,25 +45,25 @@ uint8_t Controller::get_speed_by_step(Steps step)
 {
     switch (step)
     {
-    case STEP_1:
+    case Steps::STEP_1:
         return 10;
-    case STEP_2:
+    case Steps::STEP_2:
         return 20;
-    case STEP_3:
+    case Steps::STEP_3:
         return 30;
-    case STEP_4:
+    case Steps::STEP_4:
         return 40;
-    case STEP_5:
+    case Steps::STEP_5:
         return 50;
-    case STEP_6:
+    case Steps::STEP_6:
         return 60;
-    case STEP_7:
+    case Steps::STEP_7:
         return 70;
-    case STEP_8:
+    case Steps::STEP_8:
         return 80;
-    case STEP_9:
+    case Steps::STEP_9:
         return 90;
-    case STEP_10:
+    case Steps::STEP_10:
         return 100;
     default:
         return 0;

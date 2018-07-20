@@ -2,10 +2,10 @@
 
 #include "Engine.h"
 
-#ifndef _CONTROLLER_H_
-#define _CONTROLLER_H_
+#ifndef __CONTROLLER_H_
+#define __CONTROLLER_H_
 
-enum Steps {
+enum class Steps {
   STEP_1,
   STEP_2,
   STEP_3,

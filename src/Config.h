@@ -1,6 +1,6 @@
 
-#ifndef _CONFIG_H_
-#define _CONFIG_H_
+#ifndef __CONFIG_H_
+#define __CONFIG_H_
 
 // 2x16 pin config
 #define LCD_RS_PIN 12
@@ -13,6 +13,10 @@
 //  engines outputs 
 #define ENGINE_1_PIN 2
 #define ENGINE_2_PIN 3
+
+// buttons
+#define BUTTON_PIN_1 A5
+#define BUTTON_PIN_2 A4
 
 #define DHTPIN_IN A0
 #define DHTTYPE DHT11

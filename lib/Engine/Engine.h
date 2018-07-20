@@ -1,8 +1,8 @@
 
 #include <Arduino.h>
 
-#ifndef _ENGINE_H_
-#define _ENGINE_H_
+#ifndef __ENGINE_H_
+#define __ENGINE_H_
 
 #define ENGINE_MAX_SPEED 100
 
