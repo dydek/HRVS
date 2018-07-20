@@ -1,7 +1,7 @@
-#include <Arduino.h>
-
 #ifndef __STATE_H_
 #define __STATE_H_
+
+#include <Arduino.h>
 
 struct CurrentValues
 {

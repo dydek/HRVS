@@ -24,20 +24,34 @@
 # Template #1: General project. Test it using existing `platformio.ini`.
 #
 
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# install:
-#     - pip install -U platformio
-#
-# script:
-#     - platformio run
+language: python
+python:
+    - "2.7"
+
+sudo: false
+cache:
+    directories:
+        - "~/.platformio"
+
+install:
+    - pip install -U platformio
+
+    #
+    # Libraries from PlatformIO Library Registry:
+    #
+    # https://platformio.org/lib/show/1/OneWire
+    # 131 - TimerOne https://github.com/PaulStoffregen/TimerOne
+    # 887 - LiquidCrystal 
+    # 671 - LiquidMenu https://github.com/VaSe7u/LiquidMenu
+    # 440 - Thread https://github.com/ivanseidel/ArduinoThread
+    # 1 - OneWire https://github.com/PaulStoffregen/OneWire
+    # 77 - Button https://github.com/JChristensen/JC_Button
+    # 19 - DHT sensor library https://github.com/adafruit/DHT-sensor-library
+    # 31 - Adafruit sensor https://github.com/adafruit/Adafruit_Sensor
+    - platformio lib install 131 887 671 440 1 77 19 31
+
+script:
+    - platformio run
 
 
 #

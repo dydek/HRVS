@@ -1,8 +1,8 @@
-#include <LiquidMenu.h>
-#include <State.h>
-
 #ifndef __MENU_H_
 #define __MENU_H_
+
+#include <LiquidMenu.h>
+#include <State.h>
 
 struct LcdConfig
 {

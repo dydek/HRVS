@@ -1,9 +1,8 @@
-#include <Arduino.h>
-
-#include "Engine.h"
-
 #ifndef __CONTROLLER_H_
 #define __CONTROLLER_H_
+
+#include <Arduino.h>
+#include <Engine.h>
 
 enum class Steps {
   STEP_1,

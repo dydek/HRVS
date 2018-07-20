@@ -12,7 +12,7 @@
 #include <Engine.h>
 #include <State.h>
 #include <Controller.h>
-#include <Menu.h>
+#include <Menu2.h>
 #include <Keyboard.h>
 
 #include "Config.h"
