@@ -35,6 +35,7 @@ cache:
 
 install:
     - pip install -U platformio
+    - platformio update
 
     #
     # Libraries from PlatformIO Library Registry:
@@ -53,6 +54,11 @@ install:
 script:
     - platformio run
 
+    # - echo "List remote devices"
+    # - platformio remote device list
+
+    # - echo "Run embedded test on remote devices (Arduino Uno and NodeMCU ESP8266)"
+    # - platformio remote test -e nanoatmega328
 
 #
 # Template #2: The project is intended to by used as a library with examples

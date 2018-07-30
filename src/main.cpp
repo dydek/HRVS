@@ -1,3 +1,6 @@
+// disable main loop during testing
+#ifndef UNIT_TEST
+
 #include <Arduino.h>
 #include <JC_Button.h>
 #include <Thread.h>
@@ -101,3 +104,5 @@ void loop()
 {
     keyboard2.loop_tick();
 }
+
+#endif
