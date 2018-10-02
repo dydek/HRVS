@@ -5,8 +5,9 @@
 
 #include <JC_Button.h>
 #include <Menu2.h>
+#include <AppFlow.h>
 
-
+typedef void (AppFlow::*__appflow_callback)();
 
 enum states {
     WAIT,
@@ -24,17 +25,21 @@ const uint16_t LONG_PRESS (700);
  */
 class SimplyKeyboard {
     public:
-        SimplyKeyboard(uint8_t, uint8_t);
+        SimplyKeyboard(uint8_t, uint8_t, AppFlow* flow);
         void loop_tick(void);
-        void button_1_click_register(Menu* menu, void (Menu::*callback)());
-        void button_1_long_click_register(void (*callback)(void));
-        void button_2_click_register(void (*callback)(void));
-        void button_2_long_click_register(void (*callback)(void));
+        void button_1_click_register(__appflow_callback);
+        void button_1_long_click_register(__appflow_callback);
+        void button_2_click_register(__appflow_callback);
+        void button_2_long_click_register(__appflow_callback);
     private:
+        void button_1_click_run(void);
+        AppFlow* flow;
         Button* button1;
         Button* button2;
         states STATE;
         bool LONG_PRESS_LOCK = false;
+        // callbacks
+        __appflow_callback button_1_click_callback;
 };
 
 #endif

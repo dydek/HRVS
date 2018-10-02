@@ -1,3 +1,5 @@
+#if defined(ARDUINO) && defined(UNIT_TEST)
+
 #include <Arduino.h>
 #include <unity.h>
 
@@ -47,3 +49,5 @@ void loop()
 {
     delay(500);
 }
+
+#endif

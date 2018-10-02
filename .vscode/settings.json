@@ -1,6 +1,6 @@
 {
     "terminal.integrated.env.osx": {
-        "PATH": "/Users/michaldydecki/.platformio/penv/bin:/Users/michaldydecki/.platformio/penv:/usr/local/opt/mysql@5.6/bin:/usr/local/Cellar/pyenv-virtualenv/1.0.0/shims:/Users/michaldydecki/.pyenv/shims:/Users/michaldydecki/.pyenv/bin:/Users/michaldydecki/.nvm/versions/node/v5.12.0/bin:/usr/local/Cellar/pyenv-virtualenv/1.0.0/shims:/usr/local/opt/pyenv/shims:/usr/local/opt/pyenv/bin:/Users/michaldydecki/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Users/michaldydecki/Programming/Android/sdk/tools:/Users/michaldydecki/Programming/Android/sdk/platform-tools:/Users/michaldydecki/.rvm/bin",
+        "PATH": "/Users/misiek/.platformio/penv/bin:/Users/misiek/.platformio/penv:/Users/misiek/.nvm/versions/node/v8.9.4/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
         "PLATFORMIO_CALLER": "vscode"
     }
 }

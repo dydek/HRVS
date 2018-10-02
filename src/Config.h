@@ -21,4 +21,7 @@
 #define DHTPIN_IN A0
 #define DHTTYPE DHT11
 
+// debug options
+#define KEYBOARD_DEBUG true
+
 #endif

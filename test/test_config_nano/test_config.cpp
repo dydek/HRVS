@@ -1,5 +1,8 @@
+#if defined(ARDUINO) && defined(UNIT_TEST)
+
 #include <Arduino.h>
 #include <unity.h>
+
 #include "Config.h"
 
 void test_lcd_config(void) {
@@ -26,3 +29,5 @@ void setup() {
 void loop() {
     delay(500);
 }
+
+#endif

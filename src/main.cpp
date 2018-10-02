@@ -17,6 +17,7 @@
 #include <Controller.h>
 #include <Menu2.h>
 #include <Keyboard.h>
+#include <AppFlow.h>
 
 #include "Config.h"
 
@@ -31,8 +32,9 @@ Menu menu({LCD_RS_PIN,
            LCD_D7_PIN},
           &current_values);
 
-SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2);
+AppFlow flow(&menu);
 
+SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2, &flow);
 
 ThreadController controll = ThreadController();
 
@@ -94,7 +96,7 @@ void setup()
 
     controll.add(&menuUpdateThread);
 
-    keyboard2.button_1_click_register(&menu, &Menu::next_screen);
+    keyboard2.button_1_click_register(&AppFlow::button_1_click);
     menu.begin();
 
     controll.run();

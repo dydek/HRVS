@@ -1,3 +1,5 @@
+#if defined(ARDUINO) && defined(UNIT_TEST)
+
 #include <Arduino.h>
 #include <unity.h>
 
@@ -25,3 +27,5 @@ void setup() {
 void loop() {
     delay(500);
 }
+
+#endif
