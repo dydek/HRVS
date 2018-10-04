@@ -14,6 +14,12 @@ struct LcdConfig
   uint8_t d7_pin;
 };
 
+struct MenuTree
+{
+  LiquidScreen* screen;
+  LiquidLine* lines[5];
+};
+
 class Menu
 {
 public:
@@ -24,27 +30,28 @@ public:
 
 private:
   void init_menu();
-  volatile CurrentValues* current_values;
-  LiquidCrystal* lcd;
-  LiquidMenu* menu;
-  LiquidScreen* welcome_screen;
-  LiquidLine* line1_1;
-  LiquidLine* line1_2;
-  LiquidLine* line1_3;
-  LiquidLine* line2_1;
-  LiquidLine* line2_2;
-  LiquidLine* line2_3;
-  LiquidLine* line3_1;
-  LiquidLine* line3_2;
-  LiquidLine* line3_3;
-  LiquidLine* line4_1;
-  LiquidLine* line4_2;
+  volatile CurrentValues *current_values;
+  LiquidCrystal *lcd;
+  LiquidMenu *menu;
+  LiquidScreen *welcome_screen;
+  LiquidLine *line1_1;
+  LiquidLine *line1_2;
+  LiquidLine *line1_3;
+  LiquidLine *line2_1;
+  LiquidLine *line2_2;
+  LiquidLine *line2_3;
+  LiquidLine *line3_1;
+  LiquidLine *line3_2;
+  LiquidLine *line3_3;
+  LiquidLine *line4_1;
+  LiquidLine *line4_2;
   // LiquidLine* line_set_speed_1;
-  LiquidScreen* menu_screen_1;
-  LiquidScreen* menu_screen_2;
-  LiquidScreen* menu_screen_3;
-  LiquidScreen* menu_screen_4;
+  LiquidScreen *menu_screen_1;
+  LiquidScreen *menu_screen_2;
+  LiquidScreen *menu_screen_3;
+  LiquidScreen *menu_screen_4;
   //LiquidScreen* menu_screen_set_speed;
+  MenuTree menu_tree[5];
 };
 
 #endif

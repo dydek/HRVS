@@ -97,6 +97,7 @@ void setup()
     controll.add(&menuUpdateThread);
 
     keyboard2.button_1_click_register(&AppFlow::button_1_click);
+    keyboard2.button_2_click_register(&AppFlow::button_2_click);
     menu.begin();
 
     controll.run();

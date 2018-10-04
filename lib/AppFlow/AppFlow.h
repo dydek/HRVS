@@ -8,6 +8,7 @@ class AppFlow
   public:
     AppFlow(Menu* menu);
     void button_1_click(void);
+    void button_2_click(void);
   private:
     Menu* menu;
 };

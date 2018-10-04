@@ -33,6 +33,7 @@ class SimplyKeyboard {
         void button_2_long_click_register(__appflow_callback);
     private:
         void button_1_click_run(void);
+        void button_2_click_run(void);
         AppFlow* flow;
         Button* button1;
         Button* button2;
@@ -40,6 +41,7 @@ class SimplyKeyboard {
         bool LONG_PRESS_LOCK = false;
         // callbacks
         __appflow_callback button_1_click_callback;
+        __appflow_callback button_2_click_callback;
 };
 
 #endif

@@ -35,7 +35,7 @@ void Menu::init_menu()
         *this->line1_1, *this->line1_2, *this->line1_3);
 
     this->line2_1 = new LiquidLine(0, 0, "Speeds:");
-    this->line2_2 = new LiquidLine(0, 1, "1200rpm");
+    this->line2_2 = new LiquidLine(0, 1, this->current_values->fan_speed, "rpm");
     this->line2_3 = new LiquidLine(8, 1, "1450rpm");
     this->menu_screen_1 = new LiquidScreen(
         *this->line2_1, *this->line2_2, *this->line2_3);
@@ -63,5 +63,6 @@ void Menu::next_screen()
 
 
 void Menu::refresh() {
+
     this->menu->softUpdate();
 }

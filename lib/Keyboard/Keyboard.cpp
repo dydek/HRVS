@@ -25,8 +25,9 @@ void SimplyKeyboard::button_1_long_click_register(__appflow_callback)
 {
 }
 
-void SimplyKeyboard::button_2_click_register(__appflow_callback)
+void SimplyKeyboard::button_2_click_register(__appflow_callback callback)
 {
+    this->button_2_click_callback = callback;
 }
 
 void SimplyKeyboard::button_2_long_click_register(__appflow_callback)
@@ -37,7 +38,14 @@ void SimplyKeyboard::button_1_click_run()
 {
     if (this->button_1_click_callback)
     {
-        CALL_MEMBER_FN(this->flow, this->button_1_click_callback);
+        CALL_MEMBER_FN(AppFlow(*this->flow), this->button_1_click_callback)();
+    }
+}
+
+void SimplyKeyboard::button_2_click_run()
+{
+    if (this->button_2_click_callback) {
+        CALL_MEMBER_FN(AppFlow(*this->flow), this->button_2_click_callback)();
     }
 }
 
@@ -96,6 +104,7 @@ void SimplyKeyboard::loop_tick(void)
 #ifdef KEYBOARD_DEBUG
         Serial.println("BUTTON_2_CLICK");
 #endif
+        this->button_2_click_run();
         this->STATE = WAIT;
         break;
 
