@@ -18,8 +18,9 @@
 #define BUTTON_PIN_1 A5
 #define BUTTON_PIN_2 A4
 
-#define DHTPIN_IN A0
-#define DHTTYPE DHT11
+// DHT sensors
+#define DHTPIN_1 A0
+#define DHTPIN_2 A1
 
 // debug options
 #define KEYBOARD_DEBUG true

@@ -6,7 +6,9 @@
 struct CurrentValues
 {
     bool bypass_open = false;
-    uint8_t fan_speed = 0;
+    uint16_t in_fan_speed = 0;
+    uint16_t out_fan_speed = 0;
+    uint8_t fan_gear = 0;
     float in_temp_pre = 0;
     float in_temp_post = 0;
     float out_temp_pre = 0;

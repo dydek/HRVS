@@ -1,16 +1,16 @@
 #ifndef __APPFLOW_H_
 #define __APPFLOW_H_
 
-#include <Menu2.h>
+#include <HRVSMenu.h>
 
 class AppFlow
 {
   public:
-    AppFlow(Menu* menu);
+    AppFlow(HRVSMenu* menu);
     void button_1_click(void);
     void button_2_click(void);
   private:
-    Menu* menu;
+    HRVSMenu* menu;
 };
 
 #endif

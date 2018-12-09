@@ -1,5 +1,5 @@
-#ifndef __MENU_H_
-#define __MENU_H_
+#ifndef __HRVSMENU_H_
+#define __HRVSMENU_H_
 
 #include <LiquidMenu.h>
 #include <State.h>
@@ -14,26 +14,43 @@ struct LcdConfig
   uint8_t d7_pin;
 };
 
-struct MenuTree
+enum FunctionTypes
 {
-  LiquidScreen* screen;
-  LiquidLine* lines[5];
+  short_click_button_1 = 1,
+  short_click_button_2 = 2,
+  long_click_button_1 = 3,
+  long_click_button_2 = 4
 };
 
-class Menu
+const uint8_t fan1_index = 0;
+const uint8_t fan2_index = 1;
+const uint8_t full_index = 2;
+const uint8_t thermometer_index = 3;
+
+void menu_function_increase_speed();
+void menu_function_decrease_speed();
+
+class HRVSMenu
 {
 public:
-  Menu(LcdConfig, volatile CurrentValues *);
+  HRVSMenu(LcdConfig);
   void begin();
   void next_screen();
   void refresh();
+    LiquidMenu *menu;
 
 private:
   void init_menu();
-  volatile CurrentValues *current_values;
+  void register_glyphs();
+  void build_screen(LiquidScreen *, LiquidLine *[], uint8_t);
+  void build_speed_screen();
   LiquidCrystal *lcd;
-  LiquidMenu *menu;
-  LiquidScreen *welcome_screen;
+
+  LiquidLine *menu_0_lines[4];
+  LiquidLine *menu_1_lines[4];
+  LiquidLine *menu_2_lines[4];
+  LiquidLine *menu_3_lines[4];
+
   LiquidLine *line1_1;
   LiquidLine *line1_2;
   LiquidLine *line1_3;
@@ -45,13 +62,13 @@ private:
   LiquidLine *line3_3;
   LiquidLine *line4_1;
   LiquidLine *line4_2;
-  // LiquidLine* line_set_speed_1;
+
+  LiquidScreen *menu_screen_0;
   LiquidScreen *menu_screen_1;
   LiquidScreen *menu_screen_2;
   LiquidScreen *menu_screen_3;
   LiquidScreen *menu_screen_4;
   //LiquidScreen* menu_screen_set_speed;
-  MenuTree menu_tree[5];
 };
 
 #endif

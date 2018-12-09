@@ -2,7 +2,7 @@
 #include "AppFlow.h"
 
 
-AppFlow::AppFlow(Menu *menu)
+AppFlow::AppFlow(HRVSMenu *menu)
 {
     this->menu = menu;
 }
@@ -14,6 +14,6 @@ void AppFlow::button_1_click(void)
 
 void AppFlow::button_2_click(void)
 {
-    current_values.fan_speed ++;
+    current_values.in_fan_speed += 100;
     this->menu->refresh();
 }
