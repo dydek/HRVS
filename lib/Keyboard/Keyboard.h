@@ -4,9 +4,7 @@
 #define __KEYBOARD_H_
 
 #include <JC_Button.h>
-#include <AppFlow.h>
-
-typedef void (AppFlow::*__appflow_callback)();
+#include <HRVSMenu.h>
 
 const uint16_t LONG_PRESS = 500;
 
@@ -39,7 +37,6 @@ class SimplyKeyboard
   public:
     SimplyKeyboard(uint8_t, uint8_t, HRVSMenu *hrvs_menu);
     void loop_tick(void);
-    void button_click_callback(buttonID, buttonPressType, __appflow_callback);
     HRVSMenu *hrvs_menu;
 
   private:
@@ -51,9 +48,6 @@ class SimplyKeyboard
     Button *button2;
     states STATE;
     bool LONG_PRESS_LOCK = false;
-    // callbacks
-    __appflow_callback button_1_click_callback;
-    __appflow_callback button_2_click_callback;
 };
 
 #endif

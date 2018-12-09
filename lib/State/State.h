@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#define MAX_GEAR 10
+
 struct CurrentValues
 {
     bool bypass_open = false;

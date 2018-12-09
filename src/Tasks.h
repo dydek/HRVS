@@ -2,12 +2,14 @@
 #define __TASKS_H_
 
 #include <Arduino.h>
-#include <Utils.h>
+#include <TimerOne.h>
+#include <State.h>
 
-void updateMenu()
+void updateMotorSpeeds()
 {
-    // printActualState();
-    // menu.refresh();
+    uint16_t current_speed = 1000 - (uint16_t)(1000 - 100*current_values.fan_gear);
+    Timer1.setPwmDuty(9, current_speed);
+    Timer1.setPwmDuty(10, current_speed);
 }
 
 #endif

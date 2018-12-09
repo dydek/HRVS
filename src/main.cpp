@@ -13,11 +13,10 @@
 #include <Controller.h>
 #include <HRVSMenu.h>
 #include <Keyboard.h>
-#include <AppFlow.h>
 
 #include "Config.h"
 #include "Sensors.h"
-// #include "Tasks.h"
+#include "Tasks.h"
 
 Engine engine1(ENGINE_1_PIN);
 Engine engine2(ENGINE_2_PIN);
@@ -29,36 +28,16 @@ HRVSMenu menu({LCD_RS_PIN,
                LCD_D6_PIN,
                LCD_D7_PIN});
 
-// AppFlow flow(&menu);
-
 SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2, &menu);
 
-ThreadController controll = ThreadController();
+ThreadController controll;
 
-Thread menuUpdateThread = Thread();
-Thread DHT1UpdateThread = Thread();
-Thread DHT2UpdateThread = Thread();
-Thread D18B20UpdateThread = Thread();
+Thread menuUpdateThread; 
+Thread DHT1UpdateThread; 
+Thread DHT2UpdateThread; 
+Thread D18B20UpdateThread; 
+Thread MotorSpeedThread;
 
-// uint32_t delayMS;
-
-uint16_t counter = 0;
-uint16_t brightness = 0;
-uint16_t lastCheck = 0;
-
-void update_led()
-{
-    counter++;
-    if (counter > 500)
-    {
-        brightness++;
-        Timer1.pwm(9, brightness);
-        Timer1.pwm(10, brightness);
-        if (brightness > 1000)
-            brightness = 0;
-        counter = 0;
-    }
-}
 
 void updateMenu()
 {
@@ -68,16 +47,15 @@ void updateMenu()
 void setup()
 {
     Serial.begin(9600);
-    // delayMS = 2000;
 
     pinMode(9, OUTPUT);
     digitalWrite(9, HIGH);
     pinMode(10, OUTPUT);
     digitalWrite(10, HIGH);
 
-    // Timer1.pwm(9, 0);
-    // Timer1.pwm(10, 0);
-    // Timer1.attachInterrupt(update_led);
+    Timer1.initialize(50);
+    Timer1.pwm(9, 0);
+    Timer1.pwm(10, 0);
 
     configureSensors();
 
@@ -94,10 +72,14 @@ void setup()
     D18B20UpdateThread.onRun(D18B20SensorsUpdate);
     D18B20UpdateThread.setInterval(100);
 
+    MotorSpeedThread.onRun(updateMotorSpeeds);
+    MotorSpeedThread.setInterval(1000);
+
     controll.add(&menuUpdateThread);
     controll.add(&DHT1UpdateThread);
     controll.add(&DHT2UpdateThread);
     controll.add(&D18B20UpdateThread);
+    controll.add(&MotorSpeedThread);
     menu.begin();
 }
 

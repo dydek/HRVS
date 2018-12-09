@@ -2,17 +2,19 @@
 #include <HRVSMenu.h>
 #include "glyphs.h"
 
-
 void menu_function_increase_speed()
 {
-    Serial.println("+1");
-    current_values.fan_gear++;
+
+    if (current_values.fan_gear < MAX_GEAR)
+    {
+        current_values.fan_gear++;
+    }
 }
 
 void menu_function_decrease_speed()
 {
-    Serial.println("-1");
-    if (current_values.fan_gear > 0) {
+    if (current_values.fan_gear > 0)
+    {
         current_values.fan_gear--;
     }
 }
@@ -28,7 +30,7 @@ HRVSMenu::HRVSMenu(LcdConfig config)
         config.en_pin,
         config.d4_pin,
         config.d5_pin,
-        config.d6_pin,  
+        config.d6_pin,
         config.d7_pin);
     this->register_glyphs();
     this->init_menu();
@@ -89,13 +91,12 @@ void HRVSMenu::init_menu()
 void HRVSMenu::build_speed_screen()
 {
     this->line4_1 = new LiquidLine(0, 0, "Speed set:");
-    this->line4_2 = new LiquidLine(0, 1, current_values.fan_gear);
-    // this->line4_2->set_focusPosition(Position::RIGHT, 0, 0);
+    this->line4_2 = new LiquidLine(10, 0, current_values.fan_gear);
     this->line4_2->attach_function(short_click_button_2, menu_function_increase_speed);
     this->line4_2->attach_function(long_click_button_2, menu_function_decrease_speed);
-    // this->line4_2->set_asGlyph(1);
 
     this->menu_screen_3 = new LiquidScreen(*this->line4_1, *this->line4_2);
+    // this->menu_screen_3->set_focusPosition(1);
     this->menu_screen_3->set_focusPosition(Position::LEFT);
 }
 
@@ -114,7 +115,7 @@ void HRVSMenu::next_screen()
 
 void HRVSMenu::refresh()
 {
-    this->menu->softUpdate();
+    this->menu->update();
 }
 
 /**
@@ -126,7 +127,6 @@ void HRVSMenu::build_screen(LiquidScreen *screen, LiquidLine *lines[], uint8_t s
 
     for (uint8_t i = 0; i < size; i++)
     {
-
         if (lines[i])
         {
             screen->add_line(*(lines[i]));

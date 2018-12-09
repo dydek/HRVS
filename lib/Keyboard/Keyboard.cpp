@@ -40,10 +40,6 @@ void SimplyKeyboard::button_2_long_click_run()
     this->hrvs_menu->menu->call_function(long_click_button_2);
 }
 
-void SimplyKeyboard::button_click_callback(buttonID, buttonPressType, __appflow_callback)
-{
-}
-
 void SimplyKeyboard::loop_tick(void)
 {
     this->button1->read();
