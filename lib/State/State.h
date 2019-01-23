@@ -17,6 +17,7 @@ struct CurrentValues
     float out_temp_post = 0;
     float in_humidity = 0;
     float out_humidity = 0;
+    float heat_efficiency = NULL;
 };
 
 extern volatile struct CurrentValues current_values;

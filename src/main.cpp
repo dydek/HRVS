@@ -21,28 +21,24 @@
 Engine engine1(ENGINE_1_PIN);
 Engine engine2(ENGINE_2_PIN);
 
-HRVSMenu menu({LCD_RS_PIN,
-               LCD_EN_PIN,
-               LCD_D4_PIN,
-               LCD_D5_PIN,
-               LCD_D6_PIN,
-               LCD_D7_PIN});
+HRVSMenu menu;
 
 SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2, &menu);
-
-ThreadController controll;
-
-Thread menuUpdateThread; 
-Thread DHT1UpdateThread; 
-Thread DHT2UpdateThread; 
-Thread D18B20UpdateThread; 
-Thread MotorSpeedThread;
-
 
 void updateMenu()
 {
     menu.refresh();
 }
+
+ThreadController controll;
+
+Thread menuUpdateThread(updateMenu, 1000); 
+Thread DHT1UpdateThread(DHT1SensorUpdate, 3); 
+Thread DHT2UpdateThread(DHT2SensorUpdate, 3); 
+Thread D18B20UpdateThread(D18B20SensorsUpdate, 100); 
+Thread MotorSpeedThread(updateMotorSpeeds, 1000);
+Thread CalculateOtherParametersThread(updateOtherParameters, 1000);
+
 
 void setup()
 {
@@ -59,28 +55,14 @@ void setup()
 
     configureSensors();
 
-    // threads
-    menuUpdateThread.onRun(updateMenu);
-    menuUpdateThread.setInterval(500);
-
-    DHT1UpdateThread.onRun(DHT1SensorUpdate);
-    DHT1UpdateThread.setInterval(5);
-
-    DHT2UpdateThread.onRun(DHT2SensorUpdate);
-    DHT2UpdateThread.setInterval(5);
-
-    D18B20UpdateThread.onRun(D18B20SensorsUpdate);
-    D18B20UpdateThread.setInterval(100);
-
-    MotorSpeedThread.onRun(updateMotorSpeeds);
-    MotorSpeedThread.setInterval(1000);
-
     controll.add(&menuUpdateThread);
     controll.add(&DHT1UpdateThread);
     controll.add(&DHT2UpdateThread);
     controll.add(&D18B20UpdateThread);
-    controll.add(&MotorSpeedThread);
+    // controll.add(&MotorSpeedThread);
     menu.begin();
+
+    Serial.println("--- START ---");
 }
 
 void loop()

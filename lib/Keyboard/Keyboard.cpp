@@ -15,7 +15,6 @@ SimplyKeyboard::SimplyKeyboard(uint8_t button_pin_1, uint8_t button_pin_2, HRVSM
     this->button2->begin();
 
     this->hrvs_menu = hrvs_menu;
-    // this->flow = flow;
 }
 
 void SimplyKeyboard::button_1_click_run()
@@ -25,19 +24,17 @@ void SimplyKeyboard::button_1_click_run()
 
 void SimplyKeyboard::button_2_click_run()
 {
-    this->hrvs_menu->menu->call_function(short_click_button_2);
-    Serial.println(short_click_button_2);
+    //this->hrvs_menu->call_function(short_click_button_2);
 }
 
 void SimplyKeyboard::button_1_long_click_run()
 {
-    // this->hrvs_menu->menu->call_function(long_click_button_1);
-    this->hrvs_menu->menu->switch_focus();
+    //this->hrvs_menu->call_function(long_click_button_1);
 }
 
 void SimplyKeyboard::button_2_long_click_run()
 {
-    this->hrvs_menu->menu->call_function(long_click_button_2);
+    //this->hrvs_menu->call_function(long_click_button_2);
 }
 
 void SimplyKeyboard::loop_tick(void)

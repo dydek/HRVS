@@ -1,4 +1,5 @@
 #include <State.h>
+#include <LiquidCrystal_I2C.h>
 #include <HRVSMenu.h>
 #include "glyphs.h"
 
@@ -23,15 +24,9 @@ void menu_function_decrease_speed()
  * 
  * 
  */
-HRVSMenu::HRVSMenu(LcdConfig config)
+HRVSMenu::HRVSMenu()
 {
-    this->lcd = new LiquidCrystal(
-        config.rs_pin,
-        config.en_pin,
-        config.d4_pin,
-        config.d5_pin,
-        config.d6_pin,
-        config.d7_pin);
+    this->lcd = new LiquidCrystal_I2C(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
     this->register_glyphs();
     this->init_menu();
 }
@@ -40,12 +35,12 @@ void HRVSMenu::begin()
 {
 
     this->menu = new LiquidMenu(*(this->lcd));
-    this->lcd->begin(16, 2);
+    this->lcd->begin(20, 4);
 
     this->menu->add_screen(*this->menu_screen_0);
-    this->menu->add_screen(*this->menu_screen_1);
-    this->menu->add_screen(*this->menu_screen_2);
-    this->menu->add_screen(*this->menu_screen_3);
+    // this->menu->add_screen(*this->menu_screen_1);
+    // this->menu->add_screen(*this->menu_screen_2);
+    // this->menu->add_screen(*this->menu_screen_3);
 
     this->menu->change_screen(*this->menu_screen_0);
 }
@@ -85,19 +80,15 @@ void HRVSMenu::init_menu()
     this->line3_3 = new LiquidLine(8, 1, current_values.out_humidity);
     this->menu_screen_2 = new LiquidScreen(*this->line3_1, *this->line3_2, *this->line3_3);
 
-    this->build_speed_screen();
+    // this->build_speed_screen();
 }
 
 void HRVSMenu::build_speed_screen()
 {
-    this->line4_1 = new LiquidLine(0, 0, "Speed set:");
+    this->line4_1 = new LiquidLine(0, 0, "Speed set: ");
     this->line4_2 = new LiquidLine(10, 0, current_values.fan_gear);
-    this->line4_2->attach_function(short_click_button_2, menu_function_increase_speed);
-    this->line4_2->attach_function(long_click_button_2, menu_function_decrease_speed);
 
     this->menu_screen_3 = new LiquidScreen(*this->line4_1, *this->line4_2);
-    // this->menu_screen_3->set_focusPosition(1);
-    this->menu_screen_3->set_focusPosition(Position::LEFT);
 }
 
 void HRVSMenu::register_glyphs()
@@ -106,6 +97,8 @@ void HRVSMenu::register_glyphs()
     this->lcd->createChar(fan2_index, custom_glyps::fan2);
     this->lcd->createChar(full_index, custom_glyps::full);
     this->lcd->createChar(thermometer_index, custom_glyps::thermometer);
+    this->lcd->createChar(cross, custom_glyps::cross);
+    this->lcd->createChar(degree, custom_glyps::degree);
 }
 
 void HRVSMenu::next_screen()
@@ -116,6 +109,22 @@ void HRVSMenu::next_screen()
 void HRVSMenu::refresh()
 {
     this->menu->update();
+}
+
+void HRVSMenu::call_function(FunctionTypes fn_type) {
+    switch (fn_type)
+    {
+        case short_click_button_2:
+            menu_function_increase_speed();
+            refresh();
+            break;
+        case long_click_button_2:
+            menu_function_decrease_speed();
+            refresh();
+            break;
+        default:
+            break;
+    }
 }
 
 /**

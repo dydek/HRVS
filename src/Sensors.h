@@ -30,6 +30,7 @@ void configureSensors()
 
 void DHT1SensorUpdate()
 {
+    
     if (millis() - dht1_last_reading > DHT_READING_DELTA)
     {
         float temperature;
