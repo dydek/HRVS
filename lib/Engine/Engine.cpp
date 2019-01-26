@@ -28,12 +28,12 @@ uint8_t Engine::get_current_speed(void) {
     return this->current_speed;
 }
 
-void Engine::update_engine_speed(void)
-{
+// void Engine::update_engine_speed(void)
+// {
 
-}
+// }
 
-void Engine::config_output_pin(void)
-{
+// void Engine::config_output_pin(void)
+// {
         
-}
+// }

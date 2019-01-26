@@ -15,6 +15,7 @@
 #define DHTPIN_2 A1
 
 // debug options
-#define KEYBOARD_DEBUG true
+#define KEYBOARD_DEBUG 1
+#define DEBUG_MEMORY 1
 
 #endif

@@ -2,11 +2,21 @@
 #define __STATE_H_
 
 #include <Arduino.h>
+#include <Utils.h>
 
 #define MAX_GEAR 10
 
+
+
 struct CurrentValues
 {
+    CurrentValues() {
+        strcpy(in_temp_pre_chr, " --.--");
+        strcpy(in_temp_post_chr, " --.--");
+        strcpy(out_temp_pre_chr, " --.--");
+        strcpy(out_temp_post_chr, " --.--");
+    };
+
     bool bypass_open = false;
     uint16_t in_fan_speed = 0;
     uint16_t out_fan_speed = 0;
@@ -18,7 +28,21 @@ struct CurrentValues
     float in_humidity = 0;
     float out_humidity = 0;
     float heat_efficiency = NULL;
+
+    char in_temp_pre_chr[7];
+    char in_temp_post_chr[7];
+    char out_temp_pre_chr[7];
+    char out_temp_post_chr[7];
+
+    // this is needed by liquid line
+    char *in_temp_pre_chr_ptr = in_temp_pre_chr;
+    char *in_temp_post_chr_ptr = in_temp_post_chr;
+    char *out_temp_pre_chr_ptr = out_temp_pre_chr;
+    char *out_temp_post_chr_ptr = out_temp_post_chr;
 };
+
+void update_chr_variables();
+
 
 extern volatile struct CurrentValues current_values;
 

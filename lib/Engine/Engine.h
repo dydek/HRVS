@@ -20,8 +20,8 @@ class Engine
   protected:
   private:
     uint8_t current_speed;
-    void update_engine_speed(void);
-    void config_output_pin(void);
+    // void update_engine_speed(void);
+    // void config_output_pin(void);
 };
 
 #endif

@@ -74,7 +74,7 @@ void SimplyKeyboard::loop_tick(void)
 
     case BUTTON_1_CLICK:
 #ifdef KEYBOARD_DEBUG
-        Serial.println("DEBUG::BUTTON_1_CLICK");
+        Serial.println(F("DEBUG::BUTTON_1_CLICK"));
 #endif
         this->STATE = WAIT;
         this->button_1_click_run();
@@ -82,7 +82,7 @@ void SimplyKeyboard::loop_tick(void)
 
     case BUTTON_1_LONG_PRESS:
 #ifdef KEYBOARD_DEBUG
-        Serial.println("DEBUG::BUTTON_1_LONG_PRESS");
+        Serial.println(F("DEBUG::BUTTON_1_LONG_PRESS"));
 #endif
         this->LONG_PRESS_LOCK = true;
         this->STATE = WAIT;
@@ -91,7 +91,7 @@ void SimplyKeyboard::loop_tick(void)
 
     case BUTTON_2_CLICK:
 #ifdef KEYBOARD_DEBUG
-        Serial.println("DEBUG::BUTTON_2_CLICK");
+        Serial.println(F("DEBUG::BUTTON_2_CLICK"));
 #endif
         this->button_2_click_run();
         this->STATE = WAIT;
@@ -99,7 +99,7 @@ void SimplyKeyboard::loop_tick(void)
 
     case BUTTON_2_LONG_PRESS:
 #ifdef KEYBOARD_DEBUG
-        Serial.println("DEBUG::BUTTON_2_LONG_PRESS");
+        Serial.println(F("DEBUG::BUTTON_2_LONG_PRESS"));
 #endif
         this->LONG_PRESS_LOCK = true;
         this->STATE = WAIT;

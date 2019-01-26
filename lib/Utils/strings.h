@@ -4,7 +4,6 @@
 #include <WString.h>
 
 const String safeDisplayValue(uint16_t value);
-const char* formatTemperature(float value);
-void printActualState();
+void formatTemperature(float value, char *text);
 
 #endif

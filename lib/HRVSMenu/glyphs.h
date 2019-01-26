@@ -5,7 +5,7 @@
 
 namespace custom_glyps
 {
-uint8_t thermometer[8] = {
+uint8_t thermometer[8]  = {
     0b00100,
     0b01010,
     0b01010,
