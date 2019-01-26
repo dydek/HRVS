@@ -35,9 +35,8 @@ enum buttonID
 class SimplyKeyboard
 {
   public:
-    SimplyKeyboard(uint8_t, uint8_t, HRVSMenu *hrvs_menu);
+    SimplyKeyboard(uint8_t, uint8_t);
     void loop_tick(void);
-    HRVSMenu *hrvs_menu;
 
   private:
     void button_1_click_run(void);

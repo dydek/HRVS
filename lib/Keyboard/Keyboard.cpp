@@ -6,20 +6,17 @@
 
 #define KEYBOARD_DEBUG
 
-SimplyKeyboard::SimplyKeyboard(uint8_t button_pin_1, uint8_t button_pin_2, HRVSMenu *hrvs_menu)
+SimplyKeyboard::SimplyKeyboard(uint8_t button_pin_1, uint8_t button_pin_2)
 {
     this->button1 = new Button(button_pin_1);
     this->button2 = new Button(button_pin_2);
-
     this->button1->begin();
     this->button2->begin();
-
-    this->hrvs_menu = hrvs_menu;
 }
 
 void SimplyKeyboard::button_1_click_run()
 {
-    this->hrvs_menu->next_screen();
+    menu_next_screen();
 }
 
 void SimplyKeyboard::button_2_click_run()

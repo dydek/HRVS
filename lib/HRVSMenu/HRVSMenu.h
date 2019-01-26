@@ -1,8 +1,7 @@
-#ifndef __HRVSMENU_H_
-#define __HRVSMENU_H_
+#pragma once
 
+// #include <Arduino.h>
 #include <avr/pgmspace.h>
-#include <LiquidMenu.h>
 #include <LiquidCrystal_I2C.h>
 #include <State.h>
 
@@ -14,59 +13,67 @@
 const uint8_t fan1_index = 0;
 const uint8_t fan2_index = 1;
 const uint8_t thermometer_index = 2;
-const uint8_t cross_index = 3;
-const uint8_t degree_index = 4;
+const uint8_t line_right_index = 3;
+const uint8_t line_left_index = 4;
+const uint8_t arrow_right_index = 5;
+const uint8_t arrow_left_index = 6;
 
 const char menu_0_text1[] PROGMEM = "Intake";
 const char menu_0_text2[] PROGMEM = "Air in";
 const char menu_0_text3[] PROGMEM = "Air out";
 const char menu_0_text4[] PROGMEM = "Outtake";
-const char menu_2_text1[] PROGMEM = "Humidity";
-const char menu_3_text1[] PROGMEM = "Speed set: ";
+const char menu_1_text1[] PROGMEM = "Humidity";
+const char menu_1_text2[] PROGMEM = "Air in:";
+const char menu_1_text3[] PROGMEM = "Air out:";
+const char menu_2_text1[] PROGMEM = "Heat exchange";
+const char menu_2_text2[] PROGMEM = "efficiency:";
+const char menu_3_text1[] PROGMEM = "Motors";
+const char menu_3_text2[] PROGMEM = "Gear:";
+const char menu_3_text3[] PROGMEM = "IN motor RPM:";
+const char menu_3_text4[] PROGMEM = "OUT motor RPM:";
+const char celsius_chr[] PROGMEM = "C";
+const char procent_chr[] PROGMEM = "%";
 
 void menu_function_increase_speed();
 void menu_function_decrease_speed();
 
-class HRVSMenu
-{
-public:
-  HRVSMenu();
-  void begin();
-  void next_screen();
-  void call_function(uint8_t);
-  void refresh();
-  LiquidMenu *menu;
+void lcd_begin();
 
-private:
-  void init_menu();
-  void register_glyphs();
-  void build_screen(LiquidScreen *, LiquidLine *[], uint8_t);
-  void build_speed_screen();
-  LiquidCrystal_I2C *lcd;
+void update_current_screen();
+void menu_next_screen();
 
-  LiquidLine *menu_0_lines[12];
-  // LiquidLine *menu_1_lines[4];
-  // LiquidLine *menu_2_lines[4];
-  // LiquidLine *menu_3_lines[4];
+void build_screen_0();
+void update_screen_0();
 
-  // LiquidLine *line1_1;
-  // LiquidLine *line1_2;
-  // LiquidLine *line1_3;
-  LiquidLine *line2_1;
-  LiquidLine *line2_2;
-  LiquidLine *line2_3;
-  LiquidLine *line3_1;
-  LiquidLine *line3_2;
-  LiquidLine *line3_3;
-  LiquidLine *line4_1;
-  LiquidLine *line4_2;
+void build_screen_1();
+void update_screen_1();
 
-  LiquidScreen *menu_screen_0;
-  LiquidScreen *menu_screen_1;
-  LiquidScreen *menu_screen_2;
-  LiquidScreen *menu_screen_3;
-  LiquidScreen *menu_screen_4;
-  //LiquidScreen* menu_screen_set_speed;
-};
+void build_screen_2();
+void update_screen_2();
 
-#endif
+void build_screen_3();
+void update_screen_3();
+
+void _lcd_print_degree(uint8_t, uint8_t);
+
+
+static int8_t _CURRENT_SCREEN_ID = 0;
+// test 
+
+// class HRVSMenu
+// {
+// public:
+//   HRVSMenu();
+//   void begin();
+//   void next_screen();
+//   void call_function(uint8_t);
+//   void refresh();
+// //  LiquidMenu *menu;
+
+// private:
+//   void init_menu();
+//   void register_glyphs();
+//   void add_screen();
+//   LiquidCrystal_I2C *lcd;
+//   _screens HRVSScreen[5];
+// };

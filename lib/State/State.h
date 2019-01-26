@@ -27,22 +27,15 @@ struct CurrentValues
     float out_temp_post = 0;
     float in_humidity = 0;
     float out_humidity = 0;
-    float heat_efficiency = NULL;
+    float heat_efficiency = 0;
 
     char in_temp_pre_chr[7];
     char in_temp_post_chr[7];
     char out_temp_pre_chr[7];
     char out_temp_post_chr[7];
-
-    // this is needed by liquid line
-    char *in_temp_pre_chr_ptr = in_temp_pre_chr;
-    char *in_temp_post_chr_ptr = in_temp_post_chr;
-    char *out_temp_pre_chr_ptr = out_temp_pre_chr;
-    char *out_temp_post_chr_ptr = out_temp_post_chr;
 };
 
 void update_chr_variables();
-
 
 extern volatile struct CurrentValues current_values;
 

@@ -6,7 +6,7 @@
 #include <Thread.h>
 #include <ThreadController.h>
 
-// #include <TimerOne.h>
+#include <TimerOne.h>
 
 #include <Engine.h>
 #include <State.h>
@@ -14,23 +14,23 @@
 #include <HRVSMenu.h>
 #include <Keyboard.h>
 
-#include <MemoryFree.h>
-#include <pgmStrToRAM.h>
+// #include <MemoryFree.h>
+// #include <pgmStrToRAM.h>
 
 #include "Config.h"
 #include "Sensors.h"
 #include "Tasks.h"
 
-HRVSMenu menu;
+uint8_t test = 10;
 
-SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2, &menu);
+// HRVSMenu menu;
+
+SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2);
 
 void updateMenu()
 {
     update_chr_variables();
-    menu.refresh();
-    Serial.print(F("Free RAM = "));
-    Serial.println(freeMemory());
+    update_current_screen();
 }
 
 ThreadController controll;
@@ -40,7 +40,7 @@ Thread DHT1UpdateThread(DHT1SensorUpdate, 25);
 Thread DHT2UpdateThread(DHT2SensorUpdate, 25);
 Thread D18B20UpdateThread(D18B20SensorsUpdate, 100);
 Thread MotorSpeedThread(updateMotorSpeeds, 1000);
-Thread CalculateOtherParametersThread(updateOtherParameters, 1000);
+Thread CalculateOtherParametersThread(updateOtherParameters, 2000);
 
 void setup()
 {
@@ -51,9 +51,9 @@ void setup()
     pinMode(10, OUTPUT);
     digitalWrite(10, HIGH);
 
-    // Timer1.initialize(50);
-    // Timer1.pwm(9, 0);
-    // Timer1.pwm(10, 0);
+    Timer1.initialize(50);
+    Timer1.pwm(9, 0);
+    Timer1.pwm(10, 0);
 
     configureSensors();
 
@@ -62,10 +62,11 @@ void setup()
     controll.add(&DHT2UpdateThread);
     controll.add(&D18B20UpdateThread);
     controll.add(&MotorSpeedThread);
-    menu.begin();
+    controll.add(&CalculateOtherParametersThread);
 
-    Serial.println(F("--- START ---"));
+    lcd_begin();
     
+    Serial.println(F("--- START ---"));
 }
 
 void loop()
