@@ -21,7 +21,7 @@ static float dht2_last_reading = 0;
 
 // static int should_read_id = 1;
 
-void configureSensors()
+void initialize_sensors()
 {
     sensors.begin();
     sensors.setResolution(12);

@@ -14,26 +14,6 @@ SimplyKeyboard::SimplyKeyboard(uint8_t button_pin_1, uint8_t button_pin_2)
     this->button2->begin();
 }
 
-void SimplyKeyboard::button_1_click_run()
-{
-    menu_next_screen();
-}
-
-void SimplyKeyboard::button_2_click_run()
-{
-    //this->hrvs_menu->call_function(short_click_button_2);
-}
-
-void SimplyKeyboard::button_1_long_click_run()
-{
-    //this->hrvs_menu->call_function(long_click_button_1);
-}
-
-void SimplyKeyboard::button_2_long_click_run()
-{
-    //this->hrvs_menu->call_function(long_click_button_2);
-}
-
 void SimplyKeyboard::loop_tick(void)
 {
     this->button1->read();
@@ -74,7 +54,7 @@ void SimplyKeyboard::loop_tick(void)
         Serial.println(F("DEBUG::BUTTON_1_CLICK"));
 #endif
         this->STATE = WAIT;
-        this->button_1_click_run();
+        menu_next_screen();
         break;
 
     case BUTTON_1_LONG_PRESS:
@@ -83,14 +63,14 @@ void SimplyKeyboard::loop_tick(void)
 #endif
         this->LONG_PRESS_LOCK = true;
         this->STATE = WAIT;
-        this->button_1_long_click_run();
+        // nothing to do here for now
         break;
 
     case BUTTON_2_CLICK:
 #ifdef KEYBOARD_DEBUG
         Serial.println(F("DEBUG::BUTTON_2_CLICK"));
 #endif
-        this->button_2_click_run();
+        button_2_click_current_screen();
         this->STATE = WAIT;
         break;
 
@@ -100,7 +80,7 @@ void SimplyKeyboard::loop_tick(void)
 #endif
         this->LONG_PRESS_LOCK = true;
         this->STATE = WAIT;
-        this->button_2_long_click_run();
+        button_2_long_click_current_screen();
         break;
     }
 }

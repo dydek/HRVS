@@ -2,36 +2,22 @@
 #ifndef UNIT_TEST
 
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <JC_Button.h>
 #include <Thread.h>
 #include <ThreadController.h>
 
-#include <TimerOne.h>
-
 #include <Engine.h>
 #include <State.h>
-// #include <Controller.h>
 #include <HRVSMenu.h>
 #include <Keyboard.h>
-
-// #include <MemoryFree.h>
-// #include <pgmStrToRAM.h>
 
 #include "Config.h"
 #include "Sensors.h"
 #include "Tasks.h"
-
-uint8_t test = 10;
-
-// HRVSMenu menu;
+#include "Utils.h"
 
 SimplyKeyboard keyboard2(BUTTON_PIN_1, BUTTON_PIN_2);
-
-void updateMenu()
-{
-    update_chr_variables();
-    update_current_screen();
-}
 
 ThreadController controll;
 
@@ -42,20 +28,19 @@ Thread D18B20UpdateThread(D18B20SensorsUpdate, 100);
 Thread MotorSpeedThread(updateMotorSpeeds, 1000);
 Thread CalculateOtherParametersThread(updateOtherParameters, 2000);
 
+
 void setup()
 {
     Serial.begin(9600);
 
-    pinMode(9, OUTPUT);
-    digitalWrite(9, HIGH);
-    pinMode(10, OUTPUT);
-    digitalWrite(10, HIGH);
+    // set pin modes
+    pinMode(BYPASS_RELAY, OUTPUT);
+    pinMode(MOTOR_RELAY, OUTPUT);
+    digitalWrite(MOTOR_RELAY, HIGH);
+    digitalWrite(BYPASS_RELAY, HIGH);
 
-    Timer1.initialize(50);
-    Timer1.pwm(9, 0);
-    Timer1.pwm(10, 0);
-
-    configureSensors();
+    initialize_timers();
+    initialize_sensors();
 
     controll.add(&menuUpdateThread);
     controll.add(&DHT1UpdateThread);
@@ -66,7 +51,10 @@ void setup()
 
     lcd_begin();
     
-    Serial.println(F("--- START ---"));
+    lcd_show_init_screen();
+    restore_state();
+    _delay_ms(2500);
+    build_screen_0();
 }
 
 void loop()

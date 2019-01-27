@@ -4,9 +4,7 @@
 #include <Arduino.h>
 #include <Utils.h>
 
-#define MAX_GEAR 10
-
-
+#define MAX_GEAR 9
 
 struct CurrentValues
 {

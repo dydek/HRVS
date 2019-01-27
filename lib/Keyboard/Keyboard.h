@@ -17,17 +17,6 @@ enum states
     BUTTON_2_LONG_PRESS,
 };
 
-enum buttonPressType
-{
-    PRESS_LONG,
-    PRESS_SHORT
-};
-enum buttonID
-{
-    BUTTON_1,
-    BUTTON_2
-};
-
 /**
  * SimpleKeyboard class helps to navigate through all screens and settings 
  * using only 2 buttons. 
@@ -39,10 +28,6 @@ class SimplyKeyboard
     void loop_tick(void);
 
   private:
-    void button_1_click_run(void);
-    void button_2_click_run(void);
-    void button_1_long_click_run(void);
-    void button_2_long_click_run(void);
     Button *button1;
     Button *button2;
     states STATE;
